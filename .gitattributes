@@ -1,0 +1,2 @@
+templates/demo_1.xlsx filter=lfs diff=lfs merge=lfs -text
+templates/demo_1.docx filter=lfs diff=lfs merge=lfs -text

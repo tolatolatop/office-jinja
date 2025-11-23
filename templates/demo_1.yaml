@@ -1,0 +1,17 @@
+name: demo
+templates:
+  - demo_1.docx
+
+context:
+  title: 这是正文标题
+  header: 这是页眉标题
+  subtitle: 这是副标题
+  items:
+    - name: gpt
+      type: llm
+      price: 20
+      number: 1
+    - name: gemini
+      type: llm
+      price: 8
+      number: 1

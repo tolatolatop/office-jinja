@@ -10,9 +10,7 @@ version = "0.1.0"
 @version_option(version=version)
 @argument("config")
 def generate(config: str):
-    with open(config, encoding="utf-8") as f:
-        data = yaml.safe_load(f)
-    template = Template.model_validate(data)
+    template = Template.model_validate_yaml(config)
     print(template)
 
 

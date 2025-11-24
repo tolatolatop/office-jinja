@@ -18,3 +18,4 @@ context:
         number: 1
   pic:
     TEMPLATE_1: templates/demo_1.png
+    ABCD: templates/demo_1.png

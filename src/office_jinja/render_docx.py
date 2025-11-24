@@ -1,7 +1,7 @@
 import os
 import logging
 from docxtpl import DocxTemplate
-from .models import Context, Template
+from .models import Context, Template, TemplateFile
 
 
 def render_all_docs_from_template(template: Template) -> None:
@@ -9,19 +9,19 @@ def render_all_docs_from_template(template: Template) -> None:
     渲染所有docx模板
     """
     for template_file in template.templates:
-        if not template_file.endswith(".docx"):
+        if not template_file.path.endswith(".docx"):
             continue
         render_docx(template_file, template.context)
 
 
-def render_docx(template_file: str, context: Context) -> None:
+def render_docx(template_file: TemplateFile, context: Context) -> None:
     """
     渲染单个docx模板
     """
-    doc = DocxTemplate(template_file)
+    doc = DocxTemplate(template_file.path)
     doc.render(context.data)
     replace_all_pictures(doc, context)
-    doc.save(template_file.replace(".docx", ".rendered.docx"))
+    doc.save(template_file.output_path)
 
 
 def replace_all_pictures(doc: DocxTemplate, context: Context) -> None:

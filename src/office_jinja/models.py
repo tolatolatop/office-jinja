@@ -1,5 +1,29 @@
+import os
 from ruamel.yaml import YAML
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator, Field
+
+
+class TemplateFile(BaseModel):
+    path: str
+    output_path: str
+
+
+class TemplateCollection(BaseModel):
+    templates: list[TemplateFile] = []
+
+    @field_validator('templates', mode="before")
+    def validate_templates(cls, v: list[TemplateFile | str]) -> list[TemplateFile]:
+        templates = []
+        for template in v:
+            if isinstance(template, str):
+                tmpl = TemplateFile(
+                    path=template,
+                    output_path=template.replace(".docx", ".rendered.docx")
+                )
+                templates.append(tmpl)
+            else:
+                templates.append(template)
+        return templates
 
 
 class Context(BaseModel):
@@ -7,9 +31,8 @@ class Context(BaseModel):
     pic: dict
 
 
-class Template(BaseModel):
+class Template(TemplateCollection):
     name: str
-    templates: list[str]
     context: Context
 
     @classmethod

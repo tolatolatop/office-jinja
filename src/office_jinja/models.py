@@ -2,10 +2,15 @@ from ruamel.yaml import YAML
 from pydantic import BaseModel
 
 
+class Context(BaseModel):
+    data: dict
+    pic: dict
+
+
 class Template(BaseModel):
     name: str
     templates: list[str]
-    context: dict
+    context: Context
 
     @classmethod
     def model_validate_yaml(cls, file: str) -> "Template":

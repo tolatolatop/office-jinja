@@ -72,5 +72,14 @@ def render_xlsx(template_file: TemplateFile, context: Context) -> None:
     """
     bw = BookWriter(template_file.path)
     data = context.data
-    bw.render_book([data])
+    bw.render_book([{
+        "sheet_name": "Sheet1",
+        "tpl_name": "Sheet1",
+        **data
+    },
+        {
+        "sheet_name": "Sheet2",
+        "tpl_name": "Sheet2",
+        **data
+    }])
     bw.save(template_file.output_path)

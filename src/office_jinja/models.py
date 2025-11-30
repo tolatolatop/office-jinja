@@ -8,6 +8,10 @@ class TemplateFile(BaseModel):
     output_path: str
 
 
+def get_output_path(path: str) -> str:
+    return path.replace(".docx", ".rendered.docx").replace(".xlsx", ".rendered.xlsx")
+
+
 class TemplateCollection(BaseModel):
     templates: list[TemplateFile] = []
 
@@ -18,7 +22,7 @@ class TemplateCollection(BaseModel):
             if isinstance(template, str):
                 tmpl = TemplateFile(
                     path=template,
-                    output_path=template.replace(".docx", ".rendered.docx")
+                    output_path=get_output_path(template)
                 )
                 templates.append(tmpl)
             else:

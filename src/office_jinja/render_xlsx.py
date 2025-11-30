@@ -7,6 +7,7 @@ from openpyxl.worksheet.worksheet import Worksheet
 from .models import Context, Template, TemplateFile
 from openpyxl import load_workbook
 from openpyxl.drawing.image import Image as XLImage
+from xltpl.writerx import BookWriter
 
 VAR_PATTERN = re.compile(r"{{\s*([\w\.]+)\s*}}")
 FOR_PATTERN = re.compile(r"{%-?\s*for\s*([\w\.]+)\s*in\s*([\w\.]+)\s*%}")
@@ -69,9 +70,7 @@ def render_xlsx(template_file: TemplateFile, context: Context) -> None:
     """
     渲染单个xlsx模板
     """
-    wb = load_workbook(template_file.path)
-
-    for ws in wb.worksheets:
-        positions = list(iter_all_pattern_from_sheet(ws))
-        for position in positions:
-            print(ws.title, position)
+    bw = BookWriter(template_file.path)
+    data = context.data
+    bw.render_book([data])
+    bw.save(template_file.output_path)

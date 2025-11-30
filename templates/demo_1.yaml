@@ -1,6 +1,6 @@
 name: demo
 templates:
-  - templates/demo_1.docx
+  - templates/demo_1.xlsx
 
 context:
   data:
@@ -16,6 +16,10 @@ context:
         type: llm
         price: 8
         number: 1
+      - name: qwen
+        type: llm
+        price: 8
+        number: 4
   pic:
     TEMPLATE_1: templates/demo_1.png
     ABCD: templates/demo_1.png

@@ -70,18 +70,14 @@ def load_data(template_file: TemplateFile, context: Context) -> dict:
     """
     加载数据
     """
-    data = [
-        {
-            "sheet_name": "Sheet1",
-            "tpl_name": "Sheet1",
+    wb = load_workbook(template_file.path)
+    data = []
+    for sheet in wb.sheetnames:
+        data.append({
+            "sheet_name": sheet,
+            "tpl_name": sheet,
             **context.data
-        },
-        {
-            "sheet_name": "Sheet2",
-            "tpl_name": "Sheet2",
-            **context.data
-        }
-    ]
+        })
     return data
 
 

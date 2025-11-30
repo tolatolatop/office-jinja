@@ -66,20 +66,30 @@ def iter_all_pattern_from_sheet(sheet: Worksheet) -> Generator[VarPosition, None
                     )
 
 
+def load_data(template_file: TemplateFile, context: Context) -> dict:
+    """
+    加载数据
+    """
+    data = [
+        {
+            "sheet_name": "Sheet1",
+            "tpl_name": "Sheet1",
+            **context.data
+        },
+        {
+            "sheet_name": "Sheet2",
+            "tpl_name": "Sheet2",
+            **context.data
+        }
+    ]
+    return data
+
+
 def render_xlsx(template_file: TemplateFile, context: Context) -> None:
     """
     渲染单个xlsx模板
     """
     bw = BookWriter(template_file.path)
-    data = context.data
-    bw.render_book([{
-        "sheet_name": "Sheet1",
-        "tpl_name": "Sheet1",
-        **data
-    },
-        {
-        "sheet_name": "Sheet2",
-        "tpl_name": "Sheet2",
-        **data
-    }])
+    data = load_data(template_file, context)
+    bw.render_book(data)
     bw.save(template_file.output_path)

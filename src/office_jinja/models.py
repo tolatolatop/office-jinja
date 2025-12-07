@@ -32,7 +32,7 @@ class TemplateCollection(BaseModel):
 
 class Context(BaseModel):
     data: dict
-    pic: dict
+    pic: dict | None = None
 
 
 class Template(TemplateCollection):

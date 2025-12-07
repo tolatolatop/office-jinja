@@ -39,3 +39,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 office-jinja = "office_jinja.cli:generate"
+
+
+[project.scripts]
+office-jinja = "office_jinja.cli:generate"
